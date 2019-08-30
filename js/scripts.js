@@ -30,13 +30,13 @@ Cart.prototype.totalPrice = function() {
 }
 
 //type can be deepDish, thinCrust, stuffedCrust
-function Pizza() {
-  this.type = "";
-  this.size = 0;
-  this.sauce = "";
-  this.cheese = [];
-  this.veggies = [];
-  this.protein = [];
+function Pizza(type, size, sauce, cheese, veggies, protein) {
+  this.type = type;
+  this.size = size;
+  this.sauce = sauce;
+  this.cheese = cheese;
+  this.veggies = veggies;
+  this.protein = protein;
   this.price = 0;
 }
 
@@ -96,31 +96,41 @@ Pizza.prototype.modify = function(property, newPropertyValue) {
 }
 
 Pizza.prototype.addCheeses = function(cheeseArray) {
-  cheeseArray.forEach(function(cheese) {
-    if (!this.cheese.includes(cheese)) {
-      this.cheese.push(cheese);
+  var originalCheese = this.cheese;
+  cheeseArray.forEach(function(cheeseInput) {
+    if (!originalCheese.includes(cheeseInput)) {
+      originalCheese.push(cheeseInput);
     }
   });
   return this.cheese;
 }
 
 Pizza.prototype.addVeggies = function(veggieArray) {
+  var originalVeggie = this.veggie;
   veggieArray.forEach(function(veggie) {
-    if (!this.veggie.includes(veggie)) {
-      this.veggie.push(veggie);
+    if (!originalVeggie.includes(veggie)) {
+      originalVeggie.push(veggie);
     }
   });
   return this.veggie;
 }
 
 Pizza.prototype.addProtein = function(proteinArray) {
+  var originalProtein = this.protein;
   proteinArray.forEach(function(protein) {
-    if (!this.protein.includes(protein)) {
-      this.protein.push(protein);
+    if (!originalProtein.includes(protein)) {
+      originalProtein.push(protein);
     }
   });
   return this.protein;
 }
+
+//testPizza
+var testPizza = new Pizza(12, "white",["mozarella", "riccotta"],["onion", "garlic","basil","tomato"],["bacon", "impossible", "anchovy"]);
+
+//bestsellers
+
+
 
 
 $(document).ready(function(event) {
