@@ -131,9 +131,45 @@ var testPizza = new Pizza(12, "white",["mozarella", "riccotta"],["onion", "garli
 //bestsellers
 
 
+//toping lists
+var sizeOptions = [6,12,18];
+var typeOptions = ["chicago","new york", "california"];
+var sauceOptions = ["red", "white", "half and half", "bbq", "none"];
+var cheeseOptions = ["mozarella", "riccotta", "blue","feta", "vegan"]
+var veggieOptions = ["onion", "garlic", "basil", "tomato", "sun dried tomato", "corn", "arugala", "spinach", "red peppers", "jalapeno", "black olive", "green olive"];
+var proteinOptions = ["anchovy","chicken","pepperoni","sausage","bacon","impossible"];
+
+function htmlDIYPizza(sz, tp, sc, ch, veg, pro){
+  var sizeOutput = "";
+  sz.forEach(function(s){
+    sizeOutput+= "<option value="+s+">"+s+"</option>";
+  });
+  var typeOutput = "";
+  tp.forEach(function(t){
+    typeOutput+="<option value="+t+">"+t+"</option>";
+  });
+  var sauceOutput = "";
+  sc.forEach(function(s){
+    sauceOutput+="<option value="+s+">"+s+"</option>";
+  });
+  var cheeseOutput = "";
+  ch.forEach(function(c){
+    cheeseOutput+="<input type=checkbox name=cheese value="+c+"><label for="+c+">"+c+"</label>";
+  });
+  var veggieOutput="";
+  veg.forEach(function(v){
+    veggieOutput += "<input type=checkbox name=veggies value="+v+"><label for="+v+">"+v+"</label>";
+  });
+  var proteinOutput = "";
+  pro.forEach(function(p){
+    proteinOutput+= "<input type=checkbox name=protein value="+p+"><label for="+p+">"+p+"</label>";
+  });
+  var output = "<h3>Size</h3><select>"+sizeOutput+"</select>"+"<h3>Type</h3><select>"+typeOutput+"</select>"+"<h3>Sauce</h3><select>"+sauceOutput+"</select>"+"<h3>Cheese</h3>"+cheeseOutput+"<h3>Veggie</h3>"+veggieOutput+"<h3>Protein</h3>"+proteinOutput+"<button type=submit class='btn btn-dark'>Add to Cart</button>";
+  $("#makeYourOwn").html(output);
+}
+
 
 
 $(document).ready(function(event) {
-
-
+htmlDIYPizza(sizeOptions, typeOptions, sauceOptions, cheeseOptions, veggieOptions, proteinOptions);
 });
