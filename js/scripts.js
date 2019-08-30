@@ -3,11 +3,29 @@ function Cart(){
   this.total = this.toalPrice();
 }
 
+Cart.prototype.addItem = function(item){
+  this.cart.push(item);
+  return this.cart;
+}
+
+Cart.prototype.removeItem = function(item){
+  var index = this.cart.findIndex(item);
+  if(index){
+    var cartSliceBefore = this.cart.slice(0,index);
+    var cartSliceAfter = this.cart.slice(index+1,);
+    var newCart = cartSliceBefore + cartSliceAfter;
+    this.cart = newCart;
+    return this.cart;
+  }else{
+    return false;
+  }
+}
+
 Cart.prototype.totalPrice = function(){
   var total =0;
   this.cart.forEach(function(item){
     total+= item.price;
-  })
+  });
   return total;
 }
 
@@ -67,3 +85,7 @@ Pizza.prototype.pizzaPrice = function(){
   this.price = total;
   return this.price;
 }
+
+$(document).ready(function(event){
+
+});
