@@ -30,7 +30,8 @@ Cart.prototype.totalPrice = function() {
 }
 
 //type can be deepDish, thinCrust, stuffedCrust
-function Pizza(type, size, sauce, cheese, veggies, protein) {
+function Pizza(type, size, sauce, cheese, veggies, protein,name) {
+  this.name = name;
   this.type = type;
   this.size = size;
   this.sauce = sauce;
@@ -154,22 +155,40 @@ function htmlDIYPizza(sz, tp, sc, ch, veg, pro){
   });
   var cheeseOutput = "";
   ch.forEach(function(c){
-    cheeseOutput+="<input type=checkbox name=cheese value="+c+"><label for="+c+">"+c+"</label>";
+    cheeseOutput+="<li><input type=checkbox name=cheese value="+c+"><label for="+c+">"+c+"</label></li>";
   });
   var veggieOutput="";
   veg.forEach(function(v){
-    veggieOutput += "<input type=checkbox name=veggies value="+v+"><label for="+v+">"+v+"</label>";
+    veggieOutput += "<li><input type=checkbox name=veggies value="+v+"><label for="+v+">"+v+"</label></li>";
   });
   var proteinOutput = "";
   pro.forEach(function(p){
-    proteinOutput+= "<input type=checkbox name=protein value="+p+"><label for="+p+">"+p+"</label>";
+    proteinOutput+= "<li><input type=checkbox name=protein value="+p+"><label for="+p+">"+p+"</label></li>";
   });
-  var output = "<h3>Size</h3><select>"+sizeOutput+"</select>"+"<h3>Type</h3><select>"+typeOutput+"</select>"+"<h3>Sauce</h3><select>"+sauceOutput+"</select>"+"<h3>Cheese</h3>"+cheeseOutput+"<h3>Veggie</h3>"+veggieOutput+"<h3>Protein</h3>"+proteinOutput+"<button type=submit class='btn btn-dark'>Add to Cart</button>";
+  var output = "<h3>Size</h3><select>"+sizeOutput+"</select>"+"<h3>Type</h3><select>"+typeOutput+"</select>"+"<h3>Sauce</h3><select>"+sauceOutput+"</select>"+"<h3>Cheese</h3><ul>"+cheeseOutput+"</ul><h3>Veggie</h3><ul>"+veggieOutput+"</ul><h3>Protein</h3><ul>"+proteinOutput+"</ul><button type=submit class='btn btn-dark'>Add to Cart</button>";
   $("#makeYourOwn").html(output);
 }
 
+var original = new Pizza("New York", 18,"Red",["Mozarella"],[],["Pepperoni"],"Original New York");
+original.price = 15;
+var bbqChicken = new Pizza("Chicago",18,"Bbq",["Mozarella"],["Onion"]["Chicken"], "Barbeque Chicken");
+bbqChicken.price = 15;
+var allVegan = new Pizza("Claifornia", 18,"Red",["Vegan"],["Red Pepper", "Onion", "Arugala","Olive","Sun Dried Tomato"]["Impossible"], "Ultimate Vegan");
+allVegan.price = 15;
 
+var bestSellers = [original, bbqChicken, allVegan];
+
+
+// function htmlBestSellers(bestSellers){
+//   var output = "";
+//   bestSellers.forEach(function(pizzaObj){
+//     output+="<h2>"+pizzaObj.name+"</h2><ul>"+
+//
+//   });
+// }
 
 $(document).ready(function(event) {
 htmlDIYPizza(sizeOptions, typeOptions, sauceOptions, cheeseOptions, veggieOptions, proteinOptions);
+
+
 });
