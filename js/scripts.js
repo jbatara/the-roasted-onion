@@ -5,9 +5,17 @@ function Cart() {
 
 Cart.prototype.addItem = function(item) {
   item.pizzaPrice();
-  this.cart.push(item);
-  this.total = this.totalPrice();
-  return this.cart;
+  if (!item.name) {
+    item.name = "Pizza #" + (this.cart.length + 1);
+    this.cart.push(item);
+    this.total = this.totalPrice();
+    return this.cart;
+  } else {
+    this.cart.push(item);
+    this.total = this.totalPrice();
+    return this.cart;
+  }
+
 }
 
 Cart.prototype.removeItem = function(item) {
@@ -189,6 +197,36 @@ var bestSellers = [original, bbqChicken, allVegan];
 //   });
 // }
 
+function printPizza(pizza) {
+  var output = "";
+  var sizeOutput = "<p><em>Size:</em> " + pizza.size + " inch</p>";
+  var typeOutput = "<p><em>Type:</em> " + pizza.type + "</p>";;
+  var sauceOutput = "<p><em>Sauce:</em> " + pizza.sauce + "</p>";;
+  var cheeseOutput = "";
+  pizza.cheese.forEach(function(c) {
+    cheeseOutput += "<li>" + c + "</li>";
+  });
+  var veggieOutput = "";
+  pizza.veggies.forEach(function(v) {
+    veggieOutput += "<li>" + v + "</li>";
+  });
+  var proteinOutput = "";
+  pizza.protein.forEach(function(p) {
+    proteinOutput += "<li>" + p + "</li>";
+  });
+  var checkEmpty = [cheeseOutput, veggieOutput, proteinOutput];
+  var checkNone = []
+  checkEmpty.forEach(function(e) {
+    if (e) {
+      checkNone.push(e);
+    } else {
+      checkNone.push("none")
+    }
+  });
+  output = "<h2>" + pizza.name + "</h2>" + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p>";
+  return output;
+}
+
 var shoppingCart = new Cart();
 
 $(document).ready(function(event) {
@@ -216,6 +254,8 @@ $(document).ready(function(event) {
     console.log(pizza);
     shoppingCart.addItem(pizza);
     console.log(shoppingCart);
+    $(".cart").append(printPizza(pizza));
+    $(".cart-price").html("<h2>Total: $" + shoppingCart.total + "</h2>");
   });
 
 
