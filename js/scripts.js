@@ -220,13 +220,44 @@ function printPizza(pizza) {
   return output;
 }
 
+function printPizzaCard(pizza){
+  var output = "";
+  var nameOutput = "<h5 class=card-title>"+pizza.name+"</h5>";
+  var sizeOutput = "<p><em>Size:</em> " + pizza.size + " inch</p>";
+  var typeOutput = "<p><em>Type:</em> " + pizza.type + "</p>";;
+  var sauceOutput = "<p><em>Sauce:</em> " + pizza.sauce + "</p>";;
+  var cheeseOutput = "";
+  pizza.cheese.forEach(function(c) {
+    cheeseOutput += "<li class=list-group-item>" + c + "</li>";
+  });
+  var veggieOutput = "";
+  pizza.veggies.forEach(function(v) {
+    veggieOutput += "<li class=list-group-item>" + v + "</li>";
+  });
+  var proteinOutput = "";
+  pizza.protein.forEach(function(p) {
+    proteinOutput += "<li class=list-group-item>" + p + "</li>";
+  });
+  var checkEmpty = [cheeseOutput, veggieOutput, proteinOutput];
+  var checkNone = []
+  checkEmpty.forEach(function(e) {
+    if (e) {
+      checkNone.push(e);
+    } else {
+      checkNone.push("none")
+    }
+  });
+  output = "<div class='card'><div class=card-body>" + nameOutput + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul class='list-group list-group-flush'>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul class='list-group list-group-flush'>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul class='list-group list-group-flush'>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p><button type=button class='btn btn-dark' id='"+pizza.name+"'>Add to Cart</button></div></div>";
+  return output;
+}
+
 
 
 
 function htmlBestSellers(bs) {
   var output = "";
   bs.forEach(function(i) {
-    output += printPizza(i);
+    output += printPizzaCard(i);
   });
   $("#bestSellers").html(output);
 }
@@ -256,12 +287,14 @@ $(document).ready(function(event) {
     });
     var pizza = new Pizza(type, size, sauce, cheeses, vegetables, proteins);
     pizza.pizzaPrice();
-    console.log(pizza);
     shoppingCart.addItem(pizza);
-    console.log(shoppingCart);
-    $(".cart").append(printPizza(pizza));
+    $(".cart").append(printPizzaCard(pizza));
     $(".cart-price").html("<h2>Total: $" + shoppingCart.total + "</h2>");
   });
+
+  $("#bestSellers button").click(function(event){
+    console.log(event.target.id);
+  })
 
 
 });

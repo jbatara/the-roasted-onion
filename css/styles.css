@@ -9,3 +9,11 @@ option{
 ul{
   list-style-type: none;
 }
+.navbar-brand{
+  font-family:serif;
+  font-size: 2rem;
+}
+.navbar{
+  font-family:serif;
+  font-size: 1.5rem;
+}
