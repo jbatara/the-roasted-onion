@@ -232,6 +232,9 @@ var shoppingCart = new Cart();
 $(document).ready(function(event) {
   htmlDIYPizza(sizeOptions, typeOptions, sauceOptions, cheeseOptions, veggieOptions, proteinOptions);
 
+  $('#pizzaCarousel').carousel({
+    interval: 2000
+  });
   $("#makeYourOwn").submit(function(event) {
     event.preventDefault();
     var type = $("select.type").children(":selected").val();

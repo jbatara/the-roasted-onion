@@ -14,8 +14,40 @@
 
 <body>
   <div class="container-fluid">
-    <div class="title"></div>
-    <div class="pizzaCarousel"></div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">The Roasted Onion</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#bestSellers">Best Sellers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#makeYourOwn">Make Your Own</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div id="pizzaCarousel" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="img/brenan-greene-HPZs4EXRFSU-unsplash.jpg" alt="pizza">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="img/vita-marija-murenaite-eSeo6IzOV00-unsplash.jpg" alt="pizza">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="img/ashim-d-silva-RNtDCoV7o4c-unsplash.jpg" alt="pizza">
+    </div>
+  </div>
+</div>
+
     <div class="row">
       <div class="makeYourOwn col-md-6">
         <form id="makeYourOwn">
