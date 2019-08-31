@@ -244,7 +244,7 @@ function printPizzaCard(pizza){
     if (e) {
       checkNone.push(e);
     } else {
-      checkNone.push("none")
+      checkNone.push("none");
     }
   });
   output = "<div class='card'><div class=card-body>" + nameOutput + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul class='list-group list-group-flush'>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul class='list-group list-group-flush'>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul class='list-group list-group-flush'>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p><button type=button class='btn btn-dark' id='"+pizza.name+"'>Add to Cart</button></div></div>";
