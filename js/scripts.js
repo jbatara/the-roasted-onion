@@ -1,10 +1,12 @@
 function Cart() {
   this.cart = [];
-  this.total = this.toalPrice();
+  this.total = 0;
 }
 
 Cart.prototype.addItem = function(item) {
+  item.pizzaPrice();
   this.cart.push(item);
+  this.total = this.totalPrice();
   return this.cart;
 }
 
@@ -30,7 +32,7 @@ Cart.prototype.totalPrice = function() {
 }
 
 //type can be deepDish, thinCrust, stuffedCrust
-function Pizza(type, size, sauce, cheese, veggies, protein,name) {
+function Pizza(type, size, sauce, cheese, veggies, protein, name) {
   this.name = name;
   this.type = type;
   this.size = size;
@@ -127,53 +129,53 @@ Pizza.prototype.addProtein = function(proteinArray) {
 }
 
 //testPizza
-var testPizza = new Pizza(12, "white",["mozarella", "riccotta"],["onion", "garlic","basil","tomato"],["bacon", "impossible", "anchovy"]);
+var testPizza = new Pizza(12, "white", ["mozarella", "riccotta"], ["onion", "garlic", "basil", "tomato"], ["bacon", "impossible", "anchovy"]);
 
 //bestsellers
 
 
 //toping lists
-var sizeOptions = [6,12,18];
-var typeOptions = ["chicago","new york", "california"];
+var sizeOptions = [6, 12, 18];
+var typeOptions = ["chicago", "new york", "california"];
 var sauceOptions = ["red", "white", "half and half", "bbq", "none"];
-var cheeseOptions = ["mozarella", "riccotta", "blue","feta", "vegan"]
+var cheeseOptions = ["mozarella", "riccotta", "blue", "feta", "vegan"]
 var veggieOptions = ["onion", "garlic", "basil", "tomato", "sun dried tomato", "corn", "arugala", "spinach", "red peppers", "jalapeno", "black olive", "green olive"];
-var proteinOptions = ["anchovy","chicken","pepperoni","sausage","bacon","impossible"];
+var proteinOptions = ["anchovy", "chicken", "pepperoni", "sausage", "bacon", "impossible"];
 
-function htmlDIYPizza(sz, tp, sc, ch, veg, pro){
+function htmlDIYPizza(sz, tp, sc, ch, veg, pro) {
   var sizeOutput = "";
-  sz.forEach(function(s){
-    sizeOutput+= "<option value="+s+">"+s+"</option>";
+  sz.forEach(function(s) {
+    sizeOutput += "<option value=" + s + ">" + s + "</option>";
   });
   var typeOutput = "";
-  tp.forEach(function(t){
-    typeOutput+="<option value="+t+">"+t+"</option>";
+  tp.forEach(function(t) {
+    typeOutput += "<option value=" + t + ">" + t + "</option>";
   });
   var sauceOutput = "";
-  sc.forEach(function(s){
-    sauceOutput+="<option value="+s+">"+s+"</option>";
+  sc.forEach(function(s) {
+    sauceOutput += "<option value=" + s + ">" + s + "</option>";
   });
   var cheeseOutput = "";
-  ch.forEach(function(c){
-    cheeseOutput+="<li><input type=checkbox name=cheese value="+c+"><label for="+c+">"+c+"</label></li>";
+  ch.forEach(function(c) {
+    cheeseOutput += "<li><input type=checkbox name=cheese value=" + c + "><label for=" + c + ">" + c + "</label></li>";
   });
-  var veggieOutput="";
-  veg.forEach(function(v){
-    veggieOutput += "<li><input type=checkbox name=veggies value="+v+"><label for="+v+">"+v+"</label></li>";
+  var veggieOutput = "";
+  veg.forEach(function(v) {
+    veggieOutput += "<li><input type=checkbox name=veggies value=" + v + "><label for=" + v + ">" + v + "</label></li>";
   });
   var proteinOutput = "";
-  pro.forEach(function(p){
-    proteinOutput+= "<li><input type=checkbox name=protein value="+p+"><label for="+p+">"+p+"</label></li>";
+  pro.forEach(function(p) {
+    proteinOutput += "<li><input type=checkbox name=protein value=" + p + "><label for=" + p + ">" + p + "</label></li>";
   });
-  var output = "<h3>Size</h3><select>"+sizeOutput+"</select>"+"<h3>Type</h3><select>"+typeOutput+"</select>"+"<h3>Sauce</h3><select>"+sauceOutput+"</select>"+"<h3>Cheese</h3><ul>"+cheeseOutput+"</ul><h3>Veggie</h3><ul>"+veggieOutput+"</ul><h3>Protein</h3><ul>"+proteinOutput+"</ul><button type=submit class='btn btn-dark'>Add to Cart</button>";
+  var output = "<h3>Size</h3><select class=size>" + sizeOutput + "</select>" + "<h3>Type</h3><select class=type>" + typeOutput + "</select>" + "<h3>Sauce</h3><select class=sauce>" + sauceOutput + "</select>" + "<h3>Cheese</h3><ul>" + cheeseOutput + "</ul><h3>Veggie</h3><ul>" + veggieOutput + "</ul><h3>Protein</h3><ul>" + proteinOutput + "</ul><button type=submit class='btn btn-dark'>Add to Cart</button>";
   $("#makeYourOwn").html(output);
 }
 
-var original = new Pizza("New York", 18,"Red",["Mozarella"],[],["Pepperoni"],"Original New York");
+var original = new Pizza("New York", 18, "Red", ["Mozarella"], [], ["Pepperoni"], "Original New York");
 original.price = 15;
-var bbqChicken = new Pizza("Chicago",18,"Bbq",["Mozarella"],["Onion"]["Chicken"], "Barbeque Chicken");
+var bbqChicken = new Pizza("Chicago", 18, "Bbq", ["Mozarella"], ["Onion"]["Chicken"], "Barbeque Chicken");
 bbqChicken.price = 15;
-var allVegan = new Pizza("Claifornia", 18,"Red",["Vegan"],["Red Pepper", "Onion", "Arugala","Olive","Sun Dried Tomato"]["Impossible"], "Ultimate Vegan");
+var allVegan = new Pizza("Claifornia", 18, "Red", ["Vegan"], ["Red Pepper", "Onion", "Arugala", "Olive", "Sun Dried Tomato"]["Impossible"], "Ultimate Vegan");
 allVegan.price = 15;
 
 var bestSellers = [original, bbqChicken, allVegan];
@@ -187,8 +189,34 @@ var bestSellers = [original, bbqChicken, allVegan];
 //   });
 // }
 
+var shoppingCart = new Cart();
+
 $(document).ready(function(event) {
-htmlDIYPizza(sizeOptions, typeOptions, sauceOptions, cheeseOptions, veggieOptions, proteinOptions);
+  htmlDIYPizza(sizeOptions, typeOptions, sauceOptions, cheeseOptions, veggieOptions, proteinOptions);
+
+  $("#makeYourOwn").submit(function(event) {
+    event.preventDefault();
+    var type = $("select.type").children(":selected").val();
+    var size = parseInt($("select.size").children(":selected").val());
+    var sauce = $("select.sauce").children(":selected").val();
+    var cheeses = [];
+    $("[name=cheese]:checked").each(function(i) {
+      cheeses.push($("[name=cheese]:checked")[i].value);
+    });
+    var vegetables = [];
+    $("[name=veggies]:checked").each(function(i) {
+      vegetables.push($("[name=veggies]:checked")[i].value);
+    });
+    var proteins = [];
+    $("[name=protein]:checked").each(function(i) {
+      proteins.push($("[name=protein]:checked")[i].value);
+    });
+    var pizza = new Pizza(type, size, sauce, cheeses, vegetables, proteins);
+    pizza.pizzaPrice();
+    console.log(pizza);
+    shoppingCart.addItem(pizza);
+    console.log(shoppingCart);
+  });
 
 
 });
