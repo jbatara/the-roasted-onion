@@ -1,3 +1,12 @@
+var shoppingCart = new Cart();
+var original = new Pizza("New York", 18, "Red", ["Mozarella"], ["none"], ["Pepperoni"], "Original New York");
+original.price = 15;
+var bbqChicken = new Pizza("Chicago", 18, "Bbq", ["Mozarella"], ["Onion"],["Chicken"], "Barbeque Chicken");
+bbqChicken.price = 15;
+var allVegan = new Pizza("Claifornia", 18, "Red", ["Vegan"], ["Red Pepper", "Onion", "Arugala", "Olive", "Sun Dried Tomato"],["Impossible"], "Ultimate Vegan");
+allVegan.price = 15;
+var bestSellers = [original, bbqChicken, allVegan];
+
 function Cart() {
   this.cart = [];
   this.total = 0;
@@ -179,23 +188,7 @@ function htmlDIYPizza(sz, tp, sc, ch, veg, pro) {
   $("#makeYourOwn").html(output);
 }
 
-var original = new Pizza("New York", 18, "Red", ["Mozarella"], [], ["Pepperoni"], "Original New York");
-original.price = 15;
-var bbqChicken = new Pizza("Chicago", 18, "Bbq", ["Mozarella"], ["Onion"]["Chicken"], "Barbeque Chicken");
-bbqChicken.price = 15;
-var allVegan = new Pizza("Claifornia", 18, "Red", ["Vegan"], ["Red Pepper", "Onion", "Arugala", "Olive", "Sun Dried Tomato"]["Impossible"], "Ultimate Vegan");
-allVegan.price = 15;
 
-var bestSellers = [original, bbqChicken, allVegan];
-
-
-// function htmlBestSellers(bestSellers){
-//   var output = "";
-//   bestSellers.forEach(function(pizzaObj){
-//     output+="<h2>"+pizzaObj.name+"</h2><ul>"+
-//
-//   });
-// }
 
 function printPizza(pizza) {
   var output = "";
@@ -227,14 +220,23 @@ function printPizza(pizza) {
   return output;
 }
 
-var shoppingCart = new Cart();
+
+
+
+function htmlBestSellers(bs) {
+  var output = "";
+  bs.forEach(function(i) {
+    output += printPizza(i);
+  });
+  $("#bestSellers").html(output);
+}
+
+
 
 $(document).ready(function(event) {
   htmlDIYPizza(sizeOptions, typeOptions, sauceOptions, cheeseOptions, veggieOptions, proteinOptions);
+  htmlBestSellers(bestSellers);
 
-  $('#pizzaCarousel').carousel({
-    interval: 2000
-  });
   $("#makeYourOwn").submit(function(event) {
     event.preventDefault();
     var type = $("select.type").children(":selected").val();
