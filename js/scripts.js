@@ -1,12 +1,3 @@
-var shoppingCart = new Cart();
-var original = new Pizza("New York", 18, "Red", ["Mozarella"], ["none"], ["Pepperoni"], "Original New York");
-original.price = 15;
-var bbqChicken = new Pizza("Chicago", 18, "Bbq", ["Mozarella"], ["Onion"],["Chicken"], "Barbeque Chicken");
-bbqChicken.price = 15;
-var allVegan = new Pizza("Claifornia", 18, "Red", ["Vegan"], ["Red Pepper", "Onion", "Arugala", "Olive", "Sun Dried Tomato"],["Impossible"], "Ultimate Vegan");
-allVegan.price = 15;
-var bestSellers = [original, bbqChicken, allVegan];
-
 function Cart() {
   this.cart = [];
   this.total = 0;
@@ -149,6 +140,14 @@ Pizza.prototype.addProtein = function(proteinArray) {
 var testPizza = new Pizza(12, "white", ["mozarella", "riccotta"], ["onion", "garlic", "basil", "tomato"], ["bacon", "impossible", "anchovy"]);
 
 //bestsellers
+var shoppingCart = new Cart();
+var original = new Pizza("New York", 18, "Red", ["Mozarella"], ["none"], ["Pepperoni"], "Original New York");
+original.price = 15;
+var bbqChicken = new Pizza("Chicago", 18, "Bbq", ["Mozarella"], ["Onion"], ["Chicken"], "Barbeque Chicken");
+bbqChicken.price = 15;
+var allVegan = new Pizza("Claifornia", 18, "Red", ["Vegan"], ["Red Pepper", "Onion", "Arugala", "Olive", "Sun Dried Tomato"], ["Impossible"], "Ultimate Vegan");
+allVegan.price = 15;
+var bestSellers = [original, bbqChicken, allVegan];
 
 
 //toping lists
