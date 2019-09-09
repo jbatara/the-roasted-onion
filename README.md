@@ -41,10 +41,7 @@ The website is currently not hosted online. This README will be updated in the f
 
 ## Known Bugs
 
-* The order bestsellers button does not place the pizza in the cart.
-* The cart prints the list of pizzas in the cart twice.
-
-Both bugs are currently a WIP.
+_No known bugs have been reported._
 
 ## Support and contact details
 
