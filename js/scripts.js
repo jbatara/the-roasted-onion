@@ -1,44 +1,3 @@
-function Cart() {
-  this.cart = [];
-  this.total = 0;
-}
-
-Cart.prototype.addItem = function(item) {
-  item.pizzaPrice();
-  if (!item.name) {
-    item.name = "Pizza #" + (this.cart.length + 1);
-    this.cart.push(item);
-    this.total = this.totalPrice();
-    return this.cart;
-  } else {
-    this.cart.push(item);
-    this.total = this.totalPrice();
-    return this.cart;
-  }
-
-}
-
-Cart.prototype.removeItem = function(item) {
-  var index = this.cart.findIndex(item);
-  if (index) {
-    var cartSliceBefore = this.cart.slice(0, index);
-    var cartSliceAfter = this.cart.slice(index + 1, );
-    var newCart = cartSliceBefore + cartSliceAfter;
-    this.cart = newCart;
-    return this.cart;
-  } else {
-    return false;
-  }
-}
-
-Cart.prototype.totalPrice = function() {
-  var total = 0;
-  this.cart.forEach(function(item) {
-    total += item.price;
-  });
-  return total;
-}
-
 //type can be deepDish, thinCrust, stuffedCrust
 function Pizza(type, size, sauce, cheese, veggies, protein, name) {
   this.name = name;
@@ -136,6 +95,59 @@ Pizza.prototype.addProtein = function(proteinArray) {
   return this.protein;
 }
 
+function Cart() {
+  this.cart = [];
+  this.total = 0;
+}
+
+Cart.prototype.addItem = function(item) {
+  if (item.price === 0) {
+    item.pizzaPrice();
+    if (!item.name) {
+      item.name = "Pizza #" + (this.cart.length + 1);
+      this.cart.push(item);
+      this.total = this.totalPrice();
+      return this.cart;
+    } else {
+      this.cart.push(item);
+      this.total = this.totalPrice();
+      return this.cart;
+    }
+  } else {
+    if (!item.name) {
+      item.name = "Pizza #" + (this.cart.length + 1);
+      this.cart.push(item);
+      this.total = this.totalPrice();
+      return this.cart;
+    } else {
+      this.cart.push(item);
+      this.total = this.totalPrice();
+      return this.cart;
+    }
+  }
+}
+
+Cart.prototype.removeItem = function(item) {
+  var index = this.cart.findIndex(item);
+  if (index) {
+    var cartSliceBefore = this.cart.slice(0, index);
+    var cartSliceAfter = this.cart.slice(index + 1, );
+    var newCart = cartSliceBefore + cartSliceAfter;
+    this.cart = newCart;
+    return this.cart;
+  } else {
+    return false;
+  }
+}
+
+Cart.prototype.totalPrice = function() {
+  var total = 0;
+  this.cart.forEach(function(item) {
+    total += item.price;
+  });
+  return total;
+}
+
 //testPizza
 var testPizza = new Pizza(12, "white", ["mozarella", "riccotta"], ["onion", "garlic", "basil", "tomato"], ["bacon", "impossible", "anchovy"]);
 
@@ -189,7 +201,7 @@ function htmlDIYPizza(sz, tp, sc, ch, veg, pro) {
 
 
 
-function printPizza(pizza) {
+function printPizza(pizza, cart) {
   var output = "";
   var sizeOutput = "<p><em>Size:</em> " + pizza.size + " inch</p>";
   var typeOutput = "<p><em>Type:</em> " + pizza.type + "</p>";;
@@ -215,13 +227,19 @@ function printPizza(pizza) {
       checkNone.push("none")
     }
   });
-  output = "<h2>" + pizza.name + "</h2>" + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p>";
-  return output;
+  if (cart === "cart") {
+    output = "<h2>" + pizza.name + "</h2>" + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p>";
+    return output;
+  } else {
+    output = "<h2>" + pizza.name + "</h2>" + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p>";
+    return output;
+  }
+
 }
 
-function printPizzaCard(pizza){
+function printPizzaCard(pizza, cart) {
   var output = "";
-  var nameOutput = "<h5 class=card-title>"+pizza.name+"</h5>";
+  var nameOutput = "<h5 class=card-title>" + pizza.name + "</h5>";
   var sizeOutput = "<p><em>Size:</em> " + pizza.size + " inch</p>";
   var typeOutput = "<p><em>Type:</em> " + pizza.type + "</p>";;
   var sauceOutput = "<p><em>Sauce:</em> " + pizza.sauce + "</p>";;
@@ -246,26 +264,26 @@ function printPizzaCard(pizza){
       checkNone.push("none");
     }
   });
-  output = "<div class='card'><div class=card-body>" + nameOutput + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul class='list-group list-group-flush'>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul class='list-group list-group-flush'>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul class='list-group list-group-flush'>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p><button type=button class='btn btn-dark' id='"+pizza.name+"'>Add to Cart</button></div></div>";
-  return output;
+  if (cart === "cart") {
+    output = "<div class='card'><div class=card-body>" + nameOutput + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul class='list-group list-group-flush'>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul class='list-group list-group-flush'>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul class='list-group list-group-flush'>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p>";
+    return output;
+  } else {
+    output = "<div class='card'><div class=card-body>" + nameOutput + sizeOutput + typeOutput + sauceOutput + "<p><em>Cheese:</em></p><ul class='list-group list-group-flush'>" + checkNone[0] + "</ul>" + "<p><em>Veggies:</em></p><ul class='list-group list-group-flush'>" + checkNone[1] + "</ul>" + "<p><em>Protein:</em></p><ul class='list-group list-group-flush'>" + checkNone[2] + "</ul><p><em><strong>Price: $" + pizza.pizzaPrice() + "</strong></em></p><button type=button class='btn btn-dark' id='" + pizza.name + "'>Add to Cart</button></div></div>";
+    return output;
+  }
 }
-
-
-
 
 function htmlBestSellers(bs) {
   var output = "";
   bs.forEach(function(i) {
     output += printPizzaCard(i);
   });
-  $("#bestSellers").html(output);
+  return output;
 }
-
-
 
 $(document).ready(function(event) {
   htmlDIYPizza(sizeOptions, typeOptions, sauceOptions, cheeseOptions, veggieOptions, proteinOptions);
-  htmlBestSellers(bestSellers);
+  $("#bestSellers").html(htmlBestSellers(bestSellers));
 
   $("#makeYourOwn").submit(function(event) {
     event.preventDefault();
@@ -287,13 +305,18 @@ $(document).ready(function(event) {
     var pizza = new Pizza(type, size, sauce, cheeses, vegetables, proteins);
     pizza.pizzaPrice();
     shoppingCart.addItem(pizza);
-    $(".cart").append(printPizzaCard(pizza));
+    $("span.cart").append(printPizzaCard(pizza, "cart"));
     $(".cart-price").html("<h2>Total: $" + shoppingCart.total + "</h2>");
   });
 
-  $("#bestSellers button").click(function(event){
-    console.log(event.target.id);
-  })
+  $("#bestSellers button").click(function(event) {
+    let chosenPizza = bestSellers.find(obj => {
+      return obj.name === event.target.id
+    });
+    shoppingCart.addItem(chosenPizza);
+    $("span.cart").append(printPizzaCard(chosenPizza, "cart"));
+    $(".cart-price").html("<h2>Total: $" + shoppingCart.total + "</h2>");
+  });
 
 
 });
